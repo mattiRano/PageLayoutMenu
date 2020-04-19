@@ -1,0 +1,60 @@
+{
+  "name": "pagelayoutpage",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A complete layout with slider-menu",
+  "repository": "https://github.com/mattiRano/PageLayoutMenu.git",
+  "homepage": "https://github.com/mattiRano/PageLayoutMenu",
+  "author": {
+    "name": "Mattia Ranocchia",
+    "email": "mattia.ranocchia@gmail.com"
+  },
+  "module": "./Layout",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "menu",
+    "slider",
+    "layout",
+    "page"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/preset-react": "^7.9.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "standard": "^14.3.3"
+  },
+  "peerDependencies": {
+    "react-dom": "^16.13.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "publish": "rm -rf dist && mkdir dist &&  babel src/Layout -d dist --copy-files"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "react-pose": "^4.0.10"
+  }
+}
