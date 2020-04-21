@@ -11,8 +11,8 @@ NOTE: this package is still in BETA. Before v1.0, we are using npm to learn how 
 Use the package manager [npm](https://www.npmjs.com/get-npm) or [yarn](https://classic.yarnpkg.com/en/docs/install/) to install PageLayoutMenu.
 
 ```bash
-npm install pageLayoutMenu
+npm install pagelayoutmenu
 
-yarn add pageLayoutMenu
+yarn add pagelayoutmenu
 
 ```
