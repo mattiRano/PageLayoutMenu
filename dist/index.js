@@ -57,7 +57,8 @@ function Layout({
   containerStyle,
   topBarMenuIcon,
   topBarContent,
-  children
+  children,
+  menuRight = false
 }) {
   const [isVisible, setVisible] = useState(false);
   const [menuIconHover, setMenuIconHover] = useState('idle');
@@ -73,30 +74,7 @@ function Layout({
 
   const toggleMenu = state => () => sliderMenu && sliderMenu.current && sliderMenu.current.toggle(state);
 
-  return /*#__PURE__*/React.createElement("div", {
-    style: { ...styles.backgroundStyle,
-      ...(backgroundImage ? {
-        backgroundImage
-      } : {})
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: '100%',
-      zIndex: 20,
-      position: 'relative',
-      height: topMenuHeight || 50
-    }
-  }, /*#__PURE__*/React.createElement(SlidingMenu, {
-    ref: sliderMenu,
-    menuItems: menuItems
-  }), /*#__PURE__*/React.createElement(MenuBar, {
-    style: { ...styles.barStyle,
-      height: 50,
-      backgroundColor: 'rgba(255, 255, 255, 1)'
-    },
-    pose: isVisible ? 'visible' : 'hidden',
-    menuHeight: topMenuHeight || 50
-  }, /*#__PURE__*/React.createElement("div", {
+  const burgerButton = () => /*#__PURE__*/React.createElement("div", {
     style: {
       height: '100%',
       width: topMenuHeight || 50,
@@ -118,13 +96,41 @@ function Layout({
       cursor: 'pointer'
     },
     pose: menuIconHover
-  }, topBarMenuIcon)), /*#__PURE__*/React.createElement("div", {
+  }, topBarMenuIcon));
+
+  const contentMenuTop = () => /*#__PURE__*/React.createElement("div", {
     style: {
       flexGrow: 1,
       width: '50%',
       height: '100%'
     }
-  }, topBarContent))), children);
+  }, topBarContent);
+
+  return /*#__PURE__*/React.createElement("div", {
+    style: { ...styles.backgroundStyle,
+      ...(backgroundImage ? {
+        backgroundImage
+      } : {})
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '100%',
+      zIndex: 20,
+      position: 'relative',
+      height: topMenuHeight || 50
+    }
+  }, /*#__PURE__*/React.createElement(SlidingMenu, {
+    ref: sliderMenu,
+    menuItems: menuItems,
+    menuRight: menuRight
+  }), /*#__PURE__*/React.createElement(MenuBar, {
+    style: { ...styles.barStyle,
+      height: 50,
+      backgroundColor: 'rgba(255, 255, 255, 1)'
+    },
+    pose: isVisible ? 'visible' : 'hidden',
+    menuHeight: topMenuHeight || 50
+  }, menuRight ? /*#__PURE__*/React.createElement(React.Fragment, null, contentMenuTop(), burgerButton()) : /*#__PURE__*/React.createElement(React.Fragment, null, burgerButton(), contentMenuTop()))), children);
 }
 
 const styles = {

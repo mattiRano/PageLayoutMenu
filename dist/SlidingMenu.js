@@ -99,14 +99,17 @@ class SlidingMenu extends React.Component {
       visible
     } = this.state;
     const {
-      menuItems
+      menuItems,
+      menuRight
     } = this.props;
-    const poseStates = ['hidden', 'mini', 'visible'];
+    const indexPose = menuRight ? 1 : 0;
+    const poseStates = [['hidden', 'mini', 'visible'], ['hidden', 'mini', 'visible']];
     const shadowStates = ['none', '4px 0 78px 0px rgba(100, 100, 100, 0.7)', '4px 0 58px 0px rgba(100, 100, 100, 0.7)'];
     const overlaySize = [0, screenWidth - MINI_WIDTH, screenWidth - MENU_WIDTH];
     return /*#__PURE__*/React.createElement(MenuContainer, {
-      pose: poseStates[visible],
-      height: screenHeight - 50
+      pose: poseStates[indexPose][visible],
+      height: screenHeight - 50,
+      isRight: menuRight
     }, /*#__PURE__*/React.createElement("div", {
       onMouseEnter: () => this.toggle('hoverInDiv'),
       style: {
@@ -116,12 +119,12 @@ class SlidingMenu extends React.Component {
       }
     }, menuItems.map((item, ind) => /*#__PURE__*/React.createElement(MenuItemContainer, {
       key: ind,
-      pose: poseStates[visible],
+      pose: poseStates[indexPose][visible],
       height: screenHeight - 50
     }, /*#__PURE__*/React.createElement(MenuItem, {
       item: item,
       visible: visible,
-      pose: poseStates[visible],
+      pose: poseStates[indexPose][visible],
       navigate: this.navigate
     })))), /*#__PURE__*/React.createElement("div", {
       onClick: () => this.toggle('hide'),
@@ -146,7 +149,7 @@ const commonMenuContainerStyle = {
   zIndex: 19,
   marginTop: 50,
   top: 0,
-  left: 0
+  left: isRight => !isRight ? window.innerWidth : 0
 };
 const MenuContainer = posed.div({
   visible: { ...commonMenuContainerStyle,
