@@ -15,5 +15,4 @@ npm install pageLayoutMenu
 
 yarn add pageLayoutMenu
 
-
 ```
