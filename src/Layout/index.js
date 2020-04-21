@@ -31,7 +31,7 @@ const HoverRotate = posed.div({
   hovered: { rotate: 90 }
 })
 
-function Layout ({
+function Layout({
   colors = DEFAULT_COLORS,
   textColor,
   highlightColor,
@@ -41,7 +41,8 @@ function Layout ({
   containerStyle,
   topBarMenuIcon,
   topBarContent,
-  children
+  children,
+  menuRight = false
 }) {
   const [isVisible, setVisible] = useState(false)
   const [menuIconHover, setMenuIconHover] = useState('idle')
@@ -53,11 +54,29 @@ function Layout ({
   }, [])
 
   const toggleMenu = state => () => sliderMenu && sliderMenu.current && sliderMenu.current.toggle(state)
+  const burgerButton = () => (
+    <div
+      style={{ height: '100%', width: topMenuHeight || 50, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      onMouseEnter={() => { toggleMenu('mouseIn'); setMenuIconHover('hovered') }}
+      onMouseLeave={() => { toggleMenu('mouseOut'); setMenuIconHover('idle') }}
+      onClick={toggleMenu('click')}
+    >
+      <HoverRotate style={{ cursor: 'pointer' }} pose={menuIconHover}>
+        {topBarMenuIcon}
+      </HoverRotate>
 
+    </div>
+  )
+
+  const contentMenuTop = () => (
+    <div style={{ flexGrow: 1, width: '50%', height: '100%' }}>
+      {topBarContent}
+    </div>
+  )
   return (
     <div style={{ ...styles.backgroundStyle, ...(backgroundImage ? { backgroundImage } : {}) }}>
       <div style={{ width: '100%', zIndex: 20, position: 'relative', height: topMenuHeight || 50 }}>
-        <SlidingMenu ref={sliderMenu} menuItems={menuItems} />
+        <SlidingMenu ref={sliderMenu} menuItems={menuItems} menuRight={menuRight} />
         <MenuBar
           style={{
             ...styles.barStyle,
@@ -65,22 +84,18 @@ function Layout ({
             backgroundColor: 'rgba(255, 255, 255, 1)'
           }} pose={isVisible ? 'visible' : 'hidden'} menuHeight={topMenuHeight || 50}
         >
+          {
+            menuRight
+              ? <>
+                {contentMenuTop()}
+                {burgerButton()}
+              </>
+              : <>
+                {burgerButton()}
+                {contentMenuTop()}
+              </>
+          }
 
-          <div
-            style={{ height: '100%', width: topMenuHeight || 50, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            onMouseEnter={() => { toggleMenu('mouseIn'); setMenuIconHover('hovered') }}
-            onMouseLeave={() => { toggleMenu('mouseOut'); setMenuIconHover('idle') }}
-            onClick={toggleMenu('click')}
-          >
-            <HoverRotate style={{ cursor: 'pointer' }} pose={menuIconHover}>
-              {topBarMenuIcon}
-            </HoverRotate>
-
-          </div>
-
-          <div style={{ flexGrow: 1, width: '50%', height: '100%' }}>
-            {topBarContent}
-          </div>
         </MenuBar>
       </div>
       {children}

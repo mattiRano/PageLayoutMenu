@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
-import posed from 'react-pose'
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import posed from 'react-pose';
 
 const modalMenu = document.getElementById('modal-menu')
 const MENU_WIDTH = 300
 const MINI_WIDTH = 100
-const ORANGE = '#F28C2C'
+const ORANGE = '#F28C2C';
 
 function MenuItem ({ item: { label, icon, action }, pose, navigate }) {
   const [isHovered, setisHovered] = useState(false)
@@ -72,7 +72,15 @@ class SlidingMenu extends React.Component {
   }
 
   renderDivision () {
-    return (<div style={{ height: 1, backgroundColor: 'white', border: '1px solid #F28C2C' }} />)
+    return (
+      <div
+        style={{
+          height: 1,
+          backgroundColor: 'white',
+          border: '1px solid #F28C2C'
+        }}
+      />
+    )
   }
 
   navigate (page) {
@@ -87,22 +95,53 @@ class SlidingMenu extends React.Component {
     const screenHeight = 1001
     const screenWidth = 111
     const { visible } = this.state
-    const { menuItems } = this.props
-    const poseStates = ['hidden', 'mini', 'visible']
-    const shadowStates = ['none', '4px 0 78px 0px rgba(100, 100, 100, 0.7)', '4px 0 58px 0px rgba(100, 100, 100, 0.7)']
+    const { menuItems, menuRight } = this.props
+    const indexPose = menuRight ? 1 : 0
+    const poseStates = [
+      ['hidden', 'mini', 'visible'],
+      ['hidden', 'mini', 'visible']
+    ]
+    const shadowStates = [
+      'none',
+      '4px 0 78px 0px rgba(100, 100, 100, 0.7)',
+      '4px 0 58px 0px rgba(100, 100, 100, 0.7)'
+    ]
     const overlaySize = [0, screenWidth - MINI_WIDTH, screenWidth - MENU_WIDTH]
 
     return (
-      <MenuContainer pose={poseStates[visible]} height={screenHeight - 50}>
-        <div onMouseEnter={() => this.toggle('hoverInDiv')} style={{ width: MENU_WIDTH, backgroundColor: 'white', boxShadow: shadowStates[visible] }}>
+      <MenuContainer
+        pose={poseStates[indexPose][visible]}
+        height={screenHeight - 50}
+        isRight={menuRight}
+      >
+        <div
+          onMouseEnter={() => this.toggle('hoverInDiv')}
+          style={{
+            width: MENU_WIDTH,
+            backgroundColor: 'white',
+            boxShadow: shadowStates[visible]
+          }}
+        >
           {menuItems.map((item, ind) => (
-            <MenuItemContainer key={ind} pose={poseStates[visible]} height={screenHeight - 50}>
-              <MenuItem item={item} visible={visible} pose={poseStates[visible]} navigate={this.navigate} />
+            <MenuItemContainer
+              key={ind}
+              pose={poseStates[indexPose][visible]}
+              height={screenHeight - 50}
+            >
+              <MenuItem
+                item={item}
+                visible={visible}
+                pose={poseStates[indexPose][visible]}
+                navigate={this.navigate}
+              />
             </MenuItemContainer>
           ))}
         </div>
 
-        <div onClick={() => this.toggle('hide')} style={{ height: '100%', width: overlaySize[visible] }} />
+        <div
+          onClick={() => this.toggle('hide')}
+          style={{ height: '100%', width: overlaySize[visible] }}
+        />
       </MenuContainer>
     )
   }
@@ -120,12 +159,20 @@ const commonMenuContainerStyle = {
   zIndex: 19,
   marginTop: 50,
   top: 0,
-  left: 0
+  left: (isRight) => (!isRight ? window.innerWidth : 0)
 }
 const MenuContainer = posed.div({
   visible: { ...commonMenuContainerStyle, x: 0, transition: { duration: 300 } },
-  mini: { ...commonMenuContainerStyle, x: -(MENU_WIDTH - MINI_WIDTH), transition: { duration: 300 } },
-  hidden: { ...commonMenuContainerStyle, x: -MENU_WIDTH, transition: { duration: 300 } }
+  mini: {
+    ...commonMenuContainerStyle,
+    x: -(MENU_WIDTH - MINI_WIDTH),
+    transition: { duration: 300 }
+  },
+  hidden: {
+    ...commonMenuContainerStyle,
+    x: -MENU_WIDTH,
+    transition: { duration: 300 }
+  }
 })
 
 const MenuItemContainer = posed.div({

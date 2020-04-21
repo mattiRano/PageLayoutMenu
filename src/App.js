@@ -1,42 +1,44 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Layout from './Layout'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Layout from './Layout';
 
-function App({ props }) {
+function App ({ props }) {
   const menuItems = [
     {
       label: 'Home',
-      icon: (iconColor) =>
+      icon: (iconColor) => (
         <i
-          class='fab fa-react' style={{
+          class='fab fa-react'
+          style={{
             border: 'none',
             fontSize: '2.8em',
             cursor: 'pointer',
             color: iconColor
           }}
-        />,
+        />
+      ),
       action: () => {
         console.log('change click icon')
       }
     }
-
   ]
 
-  const iconTopBar =
+  const iconTopBar = (
     <i
-      class='fas fa-bars' style={{
+      class='fas fa-bars'
+      style={{
         border: 'none',
         fontSize: '2.0em',
         cursor: 'pointer'
       }}
     />
+  )
 
   const colors = {
     topMenu: {
       iconColor: 'black',
       textColor: 'black',
       backgroundColor: 'white'
-
     },
     slidingMenu: {
       iconColor: 'black',
@@ -49,7 +51,15 @@ function App({ props }) {
   }
 
   const topBarContent = (
-    <div style={{ display: 'flex', alignItems: 'center', width: '100%', height: '100%', marginLeft: 25 }}>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+        marginLeft: 25
+      }}
+    >
       MENU
     </div>
   )
@@ -61,14 +71,13 @@ function App({ props }) {
       containerStyle={{}}
       topBarMenuIcon={iconTopBar}
       topBarContent={topBarContent}
+      menuRight
     >
       Hello World
     </Layout>
   )
 }
 
-App.propTypes = {
-
-}
+App.propTypes = {}
 
 export default App
