@@ -1,15 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import posed from 'react-pose'
+import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import posed from 'react-pose';
 
-import SlidingMenu from './SlidingMenu'
+import SlidingMenu from './SlidingMenu';
 
 const DEFAULT_COLORS = {
   topMenu: {
     iconColor: 'black',
     textColor: 'black',
     backgroundColor: 'white'
-
   },
   slidingMenu: {
     iconColor: 'black',
@@ -17,12 +16,19 @@ const DEFAULT_COLORS = {
     backgroundColor: 'white',
     highlightColor: 'rgb(52, 125, 209)',
     highlightIconColor: 'white',
-    higlightTextColor: 'white'
+    highlightTextColor: 'white'
   }
 }
 
 const MenuBar = posed.div({
-  visible: { y: 0, opacity: 1, transition: { y: { type: 'spring', stiffness: 50, damping: 15 }, default: 300 } },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      y: { type: 'spring', stiffness: 50, damping: 15 },
+      default: 300
+    }
+  },
   hidden: { y: ({ menuHeight }) => -menuHeight, opacity: 0, transition: 300 }
 })
 
@@ -31,10 +37,8 @@ const HoverRotate = posed.div({
   hovered: { rotate: 90 }
 })
 
-function Layout({
+function Layout ({
   colors = DEFAULT_COLORS,
-  textColor,
-  highlightColor,
   topMenuHeight,
   backgroundImage,
   menuItems,
@@ -49,22 +53,38 @@ function Layout({
 
   const sliderMenu = useRef(null)
   useEffect(() => {
-    const fadeInTimer = setTimeout(() => { setVisible(true) }, 300)
-    return () => { fadeInTimer && clearTimeout(fadeInTimer) }
+    const fadeInTimer = setTimeout(() => {
+      setVisible(true)
+    }, 300)
+    return () => {
+      fadeInTimer && clearTimeout(fadeInTimer)
+    };
   }, [])
 
-  const toggleMenu = state => () => sliderMenu && sliderMenu.current && sliderMenu.current.toggle(state)
+  const toggleMenu = (state) => () =>
+    sliderMenu && sliderMenu.current && sliderMenu.current.toggle(state)
   const burgerButton = () => (
     <div
-      style={{ height: '100%', width: topMenuHeight || 50, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      onMouseEnter={() => { toggleMenu('mouseIn'); setMenuIconHover('hovered') }}
-      onMouseLeave={() => { toggleMenu('mouseOut'); setMenuIconHover('idle') }}
+      style={{
+        height: '100%',
+        width: topMenuHeight || 50,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+      onMouseEnter={() => {
+        toggleMenu('mouseIn')
+        setMenuIconHover('hovered')
+      }}
+      onMouseLeave={() => {
+        toggleMenu('mouseOut')
+        setMenuIconHover('idle')
+      }}
       onClick={toggleMenu('click')}
     >
       <HoverRotate style={{ cursor: 'pointer' }} pose={menuIconHover}>
         {topBarMenuIcon}
       </HoverRotate>
-
     </div>
   )
 
@@ -74,28 +94,46 @@ function Layout({
     </div>
   )
   return (
-    <div style={{ ...styles.backgroundStyle, ...(backgroundImage ? { backgroundImage } : {}) }}>
-      <div style={{ width: '100%', zIndex: 20, position: 'relative', height: topMenuHeight || 50 }}>
-        <SlidingMenu ref={sliderMenu} menuItems={menuItems} menuRight={menuRight} />
+    <div
+      style={{
+        ...styles.backgroundStyle,
+        ...(backgroundImage ? { backgroundImage } : {})
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          zIndex: 20,
+          position: 'relative',
+          height: topMenuHeight || 50
+        }}
+      >
+        <SlidingMenu
+          ref={sliderMenu}
+          menuItems={menuItems}
+          menuRight={menuRight}
+          colors={colors.slidingMenu}
+        />
         <MenuBar
           style={{
             ...styles.barStyle,
             height: 50,
-            backgroundColor: 'rgba(255, 255, 255, 1)'
-          }} pose={isVisible ? 'visible' : 'hidden'} menuHeight={topMenuHeight || 50}
+            backgroundColor: colors.topMenu.backgroundColor
+          }}
+          pose={isVisible ? 'visible' : 'hidden'}
+          menuHeight={topMenuHeight || 50}
         >
-          {
-            menuRight
-              ? <>
-                {contentMenuTop()}
-                {burgerButton()}
-              </>
-              : <>
-                {burgerButton()}
-                {contentMenuTop()}
-              </>
-          }
-
+          {menuRight ? (
+            <>
+              {contentMenuTop()}
+              {burgerButton()}
+            </>
+          ) : (
+            <>
+              {burgerButton()}
+              {contentMenuTop()}
+            </>
+          )}
         </MenuBar>
       </div>
       {children}

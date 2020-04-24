@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import posed from 'react-pose';
+import { Text } from './Text';
 const modalMenu = document.getElementById('modal-menu');
 const MENU_WIDTH = 300;
 const MINI_WIDTH = 100;
-const ORANGE = '#F28C2C';
 
 function MenuItem({
   item: {
@@ -13,7 +13,8 @@ function MenuItem({
     action
   },
   pose,
-  navigate
+  navigate,
+  colors
 }) {
   const [isHovered, setisHovered] = useState(false);
   const slidingMenuDiv = {
@@ -29,13 +30,21 @@ function MenuItem({
   return /*#__PURE__*/React.createElement("div", {
     onClick: action,
     style: { ...slidingMenuDiv,
-      backgroundColor: isHovered ? ORANGE : ''
+      backgroundColor: isHovered ? colors.highlightColor : ''
     },
     onMouseEnter: updateHoverStatus(true),
     onMouseLeave: updateHoverStatus(false)
-  }, icon(isHovered ? 'white' : ORANGE), /*#__PURE__*/React.createElement(TextContainer, {
+  }, icon(isHovered ? colors.highlightIconColor : colors.iconColor), /*#__PURE__*/React.createElement(TextContainer, {
     pose: pose
-  }));
+  }, /*#__PURE__*/React.createElement(Text, {
+    size: 20,
+    style: {
+      marginLeft: 25,
+      color: isHovered ? colors.highlightTextColor : colors.textColor
+    },
+    bold: true,
+    value: label
+  })));
 }
 
 class SlidingMenu extends React.Component {
@@ -125,7 +134,8 @@ class SlidingMenu extends React.Component {
       item: item,
       visible: visible,
       pose: poseStates[indexPose][visible],
-      navigate: this.navigate
+      navigate: this.navigate,
+      colors: this.props.colors
     })))), /*#__PURE__*/React.createElement("div", {
       onClick: () => this.toggle('hide'),
       style: {

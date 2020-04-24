@@ -14,7 +14,7 @@ const DEFAULT_COLORS = {
     backgroundColor: 'white',
     highlightColor: 'rgb(52, 125, 209)',
     highlightIconColor: 'white',
-    higlightTextColor: 'white'
+    highlightTextColor: 'white'
   }
 };
 const MenuBar = posed.div({
@@ -49,8 +49,6 @@ const HoverRotate = posed.div({
 
 function Layout({
   colors = DEFAULT_COLORS,
-  textColor,
-  highlightColor,
   topMenuHeight,
   backgroundImage,
   menuItems,
@@ -122,7 +120,8 @@ function Layout({
   }, /*#__PURE__*/React.createElement(SlidingMenu, {
     ref: sliderMenu,
     menuItems: menuItems,
-    menuRight: menuRight
+    menuRight: menuRight,
+    colors: colors.slidingMenu
   }), /*#__PURE__*/React.createElement(MenuBar, {
     style: { ...styles.barStyle,
       height: 50,

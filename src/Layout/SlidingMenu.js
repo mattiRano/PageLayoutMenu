@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import posed from 'react-pose';
+import { Text } from './Text';
 
 const modalMenu = document.getElementById('modal-menu')
 const MENU_WIDTH = 300
 const MINI_WIDTH = 100
-const ORANGE = '#F28C2C';
 
-function MenuItem ({ item: { label, icon, action }, pose, navigate }) {
+function MenuItem ({ item: { label, icon, action }, pose, navigate, colors }) {
   const [isHovered, setisHovered] = useState(false)
   const slidingMenuDiv = {
     display: 'flex',
@@ -22,19 +22,25 @@ function MenuItem ({ item: { label, icon, action }, pose, navigate }) {
   return (
     <div
       onClick={action}
-      style={{ ...slidingMenuDiv, backgroundColor: isHovered ? ORANGE : '' }}
+      style={{
+        ...slidingMenuDiv,
+        backgroundColor: isHovered ? colors.highlightColor : ''
+      }}
       onMouseEnter={updateHoverStatus(true)}
       onMouseLeave={updateHoverStatus(false)}
     >
-      {icon(isHovered ? 'white' : ORANGE)}
+      {icon(isHovered ? colors.highlightIconColor : colors.iconColor)}
 
       <TextContainer pose={pose}>
-        {/* <Text
+        <Text
           size={20}
-          style={{ marginLeft: 25, color: isHovered ? 'white' : ORANGE }}
+          style={{
+            marginLeft: 25,
+            color: isHovered ? colors.highlightTextColor : colors.textColor
+          }}
           bold
           value={label}
-        /> */}
+        />
       </TextContainer>
     </div>
   )
@@ -133,6 +139,7 @@ class SlidingMenu extends React.Component {
                 visible={visible}
                 pose={poseStates[indexPose][visible]}
                 navigate={this.navigate}
+                colors={this.props.colors}
               />
             </MenuItemContainer>
           ))}

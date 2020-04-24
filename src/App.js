@@ -29,16 +29,16 @@ function App ({ props }) {
       style={{
         border: 'none',
         fontSize: '2.0em',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        color: 'yellow'
       }}
     />
   )
 
   const colors = {
     topMenu: {
-      iconColor: 'black',
       textColor: 'black',
-      backgroundColor: 'white'
+      backgroundColor: 'red'
     },
     slidingMenu: {
       iconColor: 'black',
@@ -46,7 +46,7 @@ function App ({ props }) {
       backgroundColor: 'white',
       highlightColor: 'rgb(52, 125, 209)',
       highlightIconColor: 'white',
-      higlightTextColor: 'white'
+      highlightTextColor: 'white'
     }
   }
 
@@ -71,7 +71,6 @@ function App ({ props }) {
       containerStyle={{}}
       topBarMenuIcon={iconTopBar}
       topBarContent={topBarContent}
-      menuRight
     >
       Hello World
     </Layout>
