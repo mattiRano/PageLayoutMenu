@@ -38,12 +38,12 @@ function App ({ props }) {
   const colors = {
     topMenu: {
       textColor: 'black',
-      backgroundColor: 'red'
+      backgroundColor: 'pink'
     },
     slidingMenu: {
       iconColor: 'black',
       textColor: 'black',
-      backgroundColor: 'white',
+      backgroundColor: 'red',
       highlightColor: 'rgb(52, 125, 209)',
       highlightIconColor: 'white',
       highlightTextColor: 'white'

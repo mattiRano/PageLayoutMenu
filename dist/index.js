@@ -115,7 +115,8 @@ function Layout({
       width: '100%',
       zIndex: 20,
       position: 'relative',
-      height: topMenuHeight || 50
+      height: topMenuHeight || 50,
+      overflow: 'auto'
     }
   }, /*#__PURE__*/React.createElement(SlidingMenu, {
     ref: sliderMenu,
