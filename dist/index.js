@@ -125,7 +125,7 @@ function Layout({
   }), /*#__PURE__*/React.createElement(MenuBar, {
     style: { ...styles.barStyle,
       height: 50,
-      backgroundColor: 'rgba(255, 255, 255, 1)'
+      backgroundColor: colors.topMenu.backgroundColor
     },
     pose: isVisible ? 'visible' : 'hidden',
     menuHeight: topMenuHeight || 50
