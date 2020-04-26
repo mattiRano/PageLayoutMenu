@@ -115,8 +115,7 @@ function Layout({
       width: '100%',
       zIndex: 20,
       position: 'relative',
-      height: topMenuHeight || 50,
-      overflow: 'auto'
+      height: topMenuHeight || 50
     }
   }, /*#__PURE__*/React.createElement(SlidingMenu, {
     ref: sliderMenu,
@@ -130,7 +129,12 @@ function Layout({
     },
     pose: isVisible ? 'visible' : 'hidden',
     menuHeight: topMenuHeight || 50
-  }, menuRight ? /*#__PURE__*/React.createElement(React.Fragment, null, contentMenuTop(), burgerButton()) : /*#__PURE__*/React.createElement(React.Fragment, null, burgerButton(), contentMenuTop()))), children);
+  }, menuRight ? /*#__PURE__*/React.createElement(React.Fragment, null, contentMenuTop(), burgerButton()) : /*#__PURE__*/React.createElement(React.Fragment, null, burgerButton(), contentMenuTop()))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      overflow: 'scroll',
+      height: '100%'
+    }
+  }, children));
 }
 
 const styles = {
