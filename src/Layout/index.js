@@ -105,8 +105,7 @@ function Layout ({
           width: '100%',
           zIndex: 20,
           position: 'relative',
-          height: topMenuHeight || 50,
-          overflow: 'auto'
+          height: topMenuHeight || 50
         }}
       >
         <SlidingMenu
@@ -137,7 +136,7 @@ function Layout ({
           )}
         </MenuBar>
       </div>
-      {children}
+      <div style={{ overflow: 'scroll', height: '100%' }}>{children}</div>
     </div>
   )
 }
